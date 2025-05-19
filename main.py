@@ -1,11 +1,16 @@
-# main.py
+import sys
+import os
+
+# Make root directory visible to imports
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from agents.agent_rag.rag_agent import run_rag
 from agents.agent_analysis.analytics_agent import run_analytics
 from agents.agent_web.web_agent import run_web
 from agents.agent_coordination.coordinator_agent import run_coordinator
 from ui.gradio_ui import launch_app
 
-def menu():
+def show_menu():
     print("\n📌 Select operation mode:")
     print("1. Test RAG agent")
     print("2. Test Analytics agent")
@@ -13,11 +18,11 @@ def menu():
     print("4. Run full pipeline")
     print("5. Launch web UI (Gradio)")
     print("0. Exit")
-    return input("Enter mode number: ").strip()
 
-if __name__ == "__main__":
+def main():
     while True:
-        choice = menu()
+        show_menu()
+        choice = input("Enter mode number: ").strip()
 
         if choice == "1":
             print(run_rag("What was NVIDIA’s revenue in Q4 2023?"))
@@ -30,7 +35,7 @@ if __name__ == "__main__":
 
         elif choice == "4":
             while True:
-                query = input("\n❓ Enter your query (or type 'exit'): ")
+                query = input("\n❓ Enter your query (or 'exit'): ")
                 if query.lower() in ["exit", "quit"]:
                     break
                 result = run_coordinator(query)
@@ -44,4 +49,7 @@ if __name__ == "__main__":
             break
 
         else:
-            print("❌ Invalid input. Please choose between 0 and 5.")
+            print("❌ Invalid choice. Try again.")
+
+if __name__ == "__main__":
+    main()
