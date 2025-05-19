@@ -1,3 +1,13 @@
+# ======Rahaf ======
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+chroma_db/
+#extracted_documents.pkl
+#======Rahaf end======
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
