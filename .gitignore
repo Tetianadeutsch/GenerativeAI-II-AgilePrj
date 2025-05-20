@@ -5,7 +5,9 @@ __pycache__/
 *.swp
 .env
 chroma_db/
-extracted_documents.pkl
+#extracted_documents.pkl
 venv/
 .env/
 *.egg-info/
+*.ipynb
+*.bin

@@ -49,6 +49,8 @@ def is_pdf_file(filename):
 def extract_metadata(filename):
     """
     Extract company name, year, report type and quarter from filename
+    Examples:
+        "Apple_Q1_2023_Report.pdf" ➜ ('apple', '2023', 'quarterly', 'Q1')
     """
     normalized = normalize_text(filename)
     return (
@@ -57,29 +59,37 @@ def extract_metadata(filename):
         'quarterly' if any(q in normalized for q in ['q1','q2','q3','q4','10q']) else 'annual',
         next((f'Q{i}' for i in range(1,5) if f'q{i}' in normalized), None)
     )
+    
+# ============ LOAD FROM PICKLE ============
+def load_from_pickle(file_path):
+    if os.path.exists(file_path):
+        logger.info(f"📦 Loading data from {file_path}")
+        with open(file_path, 'rb') as f:
+            return pickle.load(f)
+    return None
 
-# ============ DATA LOADING ============
-def load_data(file_path="extracted_documents.pkl"):
-    """
-    Load data from pickle file or create new one
-    """
-    if not os.path.exists(file_path):
-        logger.info("⏳ Creating new data file...")
-        data = []
-        
-        for root, _, files in os.walk('./data'):
-            for filename in tqdm(files, desc="Processing files"):
-                if is_pdf_file(filename) and (meta := extract_metadata(filename))[0]:
+
+# ============ PROCESS PDFs ============
+
+def create_data_from_pdfs(data_dir="./data", file_path="extracted_documents.pkl"):
+    logger.info("⏳ Creating new data from PDFs...")
+    extracted_data = []
+
+    for root, _, files in os.walk(data_dir):
+        for filename in tqdm(files, desc="Processing files"):
+            if is_pdf_file(filename):
+                meta = extract_metadata(filename)
+                if meta and meta[0]:  # Ensure company name exists
                     try:
                         with pdfplumber.open(os.path.join(root, filename)) as pdf:
                             tables = [
-                                pd.DataFrame(table[1:], columns=table[0]) 
-                                for page in pdf.pages 
-                                for table in page.extract_tables() 
+                                pd.DataFrame(table[1:], columns=table[0])
+                                for page in pdf.pages
+                                for table in page.extract_tables()
                                 if len(table) > 1
                             ]
                             if tables:
-                                data.append({
+                                extracted_data.append({
                                     'company': meta[0],
                                     'file': filename,
                                     'year': meta[1],
@@ -88,13 +98,24 @@ def load_data(file_path="extracted_documents.pkl"):
                                     'tables': tables
                                 })
                     except Exception as e:
-                        logger.error(f"Error processing {filename}: {e}")
+                        logger.error(f"❌ Error processing {filename}: {e}")
         
-        with open(file_path, 'wb') as f:
-            pickle.dump(data, f)
-    
-    with open(file_path, 'rb') as f:
-        return pickle.load(f)
+    # Save data to pickle file
+    with open(file_path, 'wb') as f:
+        pickle.dump(extracted_data, f)
+    logger.info(f"✅ Saved {len(extracted_data)} documents to {file_path}")
+    return extracted_data
+
+# ============ MAIN FUNCTION ============
+
+def load_data(file_path="extracted_documents.pkl", data_dir="./data"):
+    """
+    Load data from pickle file if available, otherwise process PDFs and create the file
+    """
+    extracted_data = load_from_pickle(file_path)
+    if extracted_data is None:
+        extracted_data = create_data_from_pdfs(data_dir, file_path)
+    return extracted_data
 
 # ============ TABLE FILTERING ============
 def is_relevant_table(dataframe):
@@ -166,7 +187,7 @@ def initialize_vector_store():
     """
     Initialize Chroma vector database
     """
-    embeddings = SentenceTransformerEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
     return Chroma(
         collection_name="financial_reports",
         embedding_function=embeddings,
