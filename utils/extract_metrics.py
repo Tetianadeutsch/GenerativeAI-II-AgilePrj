@@ -5,13 +5,32 @@ import pandas as pd
 
 # Extended synonyms for better coverage
 TARGET_METRICS = {
-    "revenue": ["revenue", "net sales", "total revenue", "sales", "turnover"],
-    "operating_income": ["operating income", "income from operations", "operating profit"],
-    "net_income": ["net income", "net earnings", "profit after tax"],
-    "eps": ["earnings per share", "eps", "diluted earnings per share"],
-    "total_assets": ["total assets", "assets total", "total company assets"],
-    "total_liabilities": ["total liabilities", "liabilities total"]
+    "revenue": [
+        "revenue", "net sales", "total revenue", "sales", "turnover",
+        "net product sales", "product revenue", "services revenue"
+    ],
+    "operating_income": [
+        "operating income", "income from operations", "operating profit",
+        "operating loss", "loss from operations"
+    ],
+    "net_income": [
+        "net income", "net earnings", "profit after tax", "net profit",
+        "consolidated net income", "net income attributable"
+    ],
+    "eps": [
+        "earnings per share", "eps", "diluted earnings per share",
+        "basic earnings per share", "diluted eps"
+    ],
+    "total_assets": [
+        "total assets", "assets total", "consolidated assets",
+        "total company assets", "total current assets"
+    ],
+    "total_liabilities": [
+        "total liabilities", "liabilities total", "consolidated liabilities",
+        "total current liabilities"
+    ]
 }
+
 
 def extract_numeric_value(text):
     match = re.search(r'[-+]?\$?\(?\d[\d,.\(\)\s]*\)?', str(text))
