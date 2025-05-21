@@ -29,7 +29,7 @@ def forecast_metric(df, periods=3):
     model.fit(df)
 
     # Extend time series into the future
-    future = model.make_future_dataframe(periods=periods, freq="Y")
+    future = model.make_future_dataframe(periods=periods, freq="YE")
     forecast = model.predict(future)
 
     return model, forecast
