@@ -1,3 +1,9 @@
+
+# ======tet.sydorenko======
+processed_tables/
+*.png
+chroma.sqlite3
+
 # ======Rahaf ======
 __pycache__/
 *.pyc
