@@ -1,7 +1,7 @@
 # ======tet.sydorenko======
 processed_tables/
 *.png
-chroma.sqlite3
+chroma_db
 
 # ======Rahaf ======
 __pycache__/
