@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-
 # ======tet.sydorenko======
 processed_tables/
 *.png
-chroma.sqlite3
-=======
-# ======tet.sydorenko======
-processed_tables/
-*.png
-chroma_db
->>>>>>> br_tetsyd_create_reAct_agent
+chroma_db/
 
 # ======Rahaf ======
 __pycache__/
