@@ -6,6 +6,7 @@ import pickle
 import logging
 import warnings
 import pandas as pd
+import numpy as np
 import pdfplumber
 import torch
 from tqdm import tqdm
@@ -160,10 +161,6 @@ def create_documents(extracted_data, overwrite_csv: bool = False): # edit by tet
         extracted_data (list): List of dictionaries containing company metadata and raw tables
         overwrite_csv (bool): If True, existing CSV files will be overwritten
     """
-    from langchain_core.documents import Document
-    import numpy as np
-    import re
-
     documents = []
     os.makedirs("processed_tables", exist_ok=True)  # Ensure target directory exists
 
@@ -243,8 +240,6 @@ def create_documents(extracted_data, overwrite_csv: bool = False): # edit by tet
     logger.info("✅ Created %d relevant documents", len(documents))
     return documents
 
-
-
 # ============ VECTOR STORE ============
 def initialize_vector_store():
     """
@@ -270,7 +265,7 @@ def main():
         data = load_data()
         
         # 2. Create documents
-        documents = create_documents(data,overwrite_csv=True) # REMOVE overwrite_csv=True (should be False!)
+        documents = create_documents(data,overwrite_csv=False) # REMOVE overwrite_csv=True (should be False!)
         
         # 3. Initialize vector store
         vector_store = initialize_vector_store()
