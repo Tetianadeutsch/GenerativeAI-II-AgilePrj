@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-def run_coordinator(query):
-    # Здесь может быть вызов других агентов (позже добавим)
-    return f"[Coordinator Agent] Koordinierte Antwort auf: {query}"
-=======
 # agents/agent_coordination/coordinator_agent.py
 
 from agents.agent_web.web_agent import WebAgent
@@ -71,4 +66,3 @@ Answer:"""
 
         return f"📌 Aggregated answer for query: '{query}'\n\n{aggregated}\n\n" + \
                "\n".join([f"[{agent}]\n{resp}" for agent, resp in responses.items()])
->>>>>>> 6b6466847f005bb7417765725469022295c35743

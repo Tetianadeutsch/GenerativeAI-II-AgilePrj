@@ -1,34 +1,6 @@
 # GenerativeAI-II-AgilePrj
 Final Project: "Multimodal Market Analyst AI System"
 
-multimodal-market-analyst-ai/
-├── agents/
-│   ├── rag_agent.py                # Multimodal Retrieval-Augmented Generation (Agent 1)
-│   ├── websearch_agent.py          # Web Search Agent (Agent 3)
-│   ├── analytics_agent.py          # Data Science & Visualization Agent (Agent 2)
-│   ├── coordinator_agent.py        # Coordinator Agent
-│   └── qa_agent.py                 # (Optional) QA & Ethics Agent
-|
-├── data/
-│   ├── raw_reports/                # Original PDFs (IR reports, slides, etc.)
-│   ├── extracted_texts/            # Parsed and cleaned versions of PDFs
-│   └── processed_embeddings/       # Vector store (FAISS/Chroma)
-|
-├── notebooks/
-│   ├── 01_index_documents.ipynb     # Indexing & vector store creation
-│   ├── 02_rag_pipeline.ipynb        # QA from documents
-│   ├── 03_forecast_visuals.ipynb    # Forecasting & visualization
-│   └── 04_system_integration.ipynb  # Agent collaboration & final testing
-|
-├── ui/
-│   └── app_gradio.py                # Gradio-based frontend for Hugging Face Spaces
-|
-├── .env.example                     # Environment variable template (no secrets)
-├── requirements.txt
-├── README.md
-├── LICENSE
-└── .gitignore
-
 📌 Project Summary:
 Students will build a multimodal AI system capable of answering market-related queries, providing investment insights, analyzing historical market performance, generating forecasts, and visualizing financial data. The system consists of specialized collaborative agents coordinated by a central agent, using real-world financial data sourced exclusively from Investor Relations (IR) publications (PDF reports, slides, earnings call documents, etc.) for Apple, Microsoft, Google, NVIDIA, and Meta over the past 5 years.
 

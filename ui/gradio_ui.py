@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-# ui/gradio_ui.py
-
-def launch_app():
-    print("🔧 Gradio UI is not yet implemented.")
-=======
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parent.parent))
@@ -67,4 +61,3 @@ with gr.Blocks(title="📊 Multimodal Market Analyst AI") as demo:
 
 if __name__ == "__main__":
     demo.launch()
->>>>>>> 6b6466847f005bb7417765725469022295c35743
